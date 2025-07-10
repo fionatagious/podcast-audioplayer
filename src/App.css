@@ -1,0 +1,9 @@
+#root {
+  max-width: 1280px;
+  margin: auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: white;
+  border: 2px solid #eaeaea;
+  border-radius: 10px;
+}
