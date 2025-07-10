@@ -5,28 +5,7 @@
 
 import { useMemo } from "react";
 import { formatDuration } from "../utils/formatDuration";
-
-interface Snippet {
-  audio_end_offset: number;
-  audio_start_offset: number;
-  conversation_id: number;
-  duration: number;
-  id: number;
-  speaker_id: string;
-  speaker_name: string;
-  words: [string, number, number][];
-  time: string;
-}
-
-interface Conversation {
-  id: number;
-  duration: number;
-  audio_url: string;
-  title: string;
-  location: { name: string; lng_lat: number[] };
-  time: string;
-  snippets: Snippet[];
-}
+import type { Conversation } from "../types/Conversation";
 
 interface CalculationResult {
   wordCountBySpeaker: Record<string, number>;

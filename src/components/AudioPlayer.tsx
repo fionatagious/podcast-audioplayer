@@ -35,8 +35,6 @@ const AudioPlayer = ({
   const [currentTime, setCurrentTime] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
 
-  const [showVolumeSlider, setShowVolumeSlider] = useState(false);
-
   // when play/pause button is clicked, play or pause the audio
   function handlePlayPause() {
     const audioElement = audioElementRef.current;

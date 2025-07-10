@@ -1,20 +1,41 @@
 import "./App.css";
+import { useState } from "react";
 // custom hooks
 import { useConversationData } from "./hooks/useConversationData";
 import { useSpeakerStats } from "./hooks/useSpeakerStats";
+import { useSpeakerNames } from "./hooks/useSpeakerNames";
+import { useSpeakerSnippets } from "./hooks/useSpeakerSnippets";
 // components
 import Heading from "./components/Heading";
 import Subheading from "./components/Subheading";
 import Label from "./components/Label";
 import AudioPlayer from "./components/AudioPlayer";
+import Dropdown from "./components/Dropdown";
+// types
+import type { Snippet } from "./types/Snippet";
+import type { Conversation } from "./types/Conversation";
 
 function App() {
   // Fetch conversation data and handle loading and error states
   const { conversation, loading, error } = useConversationData();
 
+  // Filter conversation by selected speaker
+  const [selectedSpeaker, setSelectedSpeaker] = useState<string>("");
+  const speakerNames = useSpeakerNames(conversation as Conversation);
+  const filteredConversation = useSpeakerSnippets(
+    conversation,
+    selectedSpeaker
+  );
+
+  const handleSpeakerChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedSpeaker = event.target.value;
+    setSelectedSpeaker(selectedSpeaker);
+  };
+
   // Calculate stats by speaker
-  const { wordCountBySpeaker, durationBySpeakerFormatted } =
-    useSpeakerStats(conversation);
+  const { wordCountBySpeaker, durationBySpeakerFormatted } = useSpeakerStats(
+    conversation as Conversation
+  );
 
   if (loading) {
     return <div>Loading conversation data...</div>;
@@ -64,6 +85,34 @@ function App() {
           duration={conversation.duration}
         />
       )}
+      {/* Filtered conversation snippets by speaker */}
+      <Subheading>Conversation snippets</Subheading>
+      <p>Select a speaker to only see the words spoken by that speaker</p>
+      <Dropdown
+        options={speakerNames}
+        value={selectedSpeaker}
+        onChange={handleSpeakerChange}
+      />
+
+      <Subheading>Transcript</Subheading>
+      {filteredConversation
+        ? filteredConversation.snippets.map((snippet: Snippet) => (
+            <div className="flex" key={snippet.id}>
+              <p className="min-w-[160px]">{snippet.speaker_name}:&nbsp;</p>
+              <p className="flex text-left">
+                {snippet.words.map((word) => word[0]).join(" ")}
+              </p>
+            </div>
+          ))
+        : conversation &&
+          conversation.snippets.map((snippet: Snippet) => (
+            <div className="flex" key={snippet.id}>
+              <p className="min-w-[160px]">{snippet.speaker_name}:&nbsp;</p>
+              <p className="flex text-left">
+                {snippet.words.map((word) => word[0]).join(" ")}
+              </p>
+            </div>
+          ))}
 
       <Subheading>How many words each speaker said</Subheading>
       {wordCountBySpeaker && (
@@ -75,7 +124,6 @@ function App() {
           ))}
         </div>
       )}
-
       <Subheading>How long each speaker spoke</Subheading>
       {durationBySpeakerFormatted && (
         <div className="flex flex-col gap-2 text-left">
@@ -86,20 +134,6 @@ function App() {
               </span>
             )
           )}
-        </div>
-      )}
-
-      <Subheading>Transcript</Subheading>
-      {conversation && (
-        <div className="flex flex-col gap-2 text-left">
-          {conversation.snippets.map((snippet) => (
-            <div className="flex" key={snippet.id}>
-              <p className="min-w-[160px]">{snippet.speaker_name}:&nbsp;</p>
-              <p className="flex text-left">
-                {snippet.words.map((word) => word[0]).join(" ")}
-              </p>
-            </div>
-          ))}
         </div>
       )}
     </div>
