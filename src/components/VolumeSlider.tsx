@@ -15,7 +15,7 @@ const VolumeSlider = ({
   onVolumeChange,
 }: VolumeSliderProps) => {
   return (
-    <div className={`flex flex-col gap-2 ${className}`}>
+    <div className={`volume-slider-wrapper flex flex-col gap-2 ${className}`}>
       <label htmlFor="volume-slider">{label}</label>
       <input
         id="volume-slider"
