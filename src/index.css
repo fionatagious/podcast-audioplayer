@@ -15,11 +15,11 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--color-indigo-900);
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--color-indigo-900);
 }
 
 p {
@@ -54,13 +54,12 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  border-color: var(--color-indigo-900);
 }
 button:hover {
-  border-color: #646cff;
-  cursor: pointer;
+  background-color: var(--color-indigo-300);
 }
 button:focus,
 button:focus-visible {

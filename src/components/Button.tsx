@@ -14,12 +14,7 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <button
-      className={`flex flex-row flex-nowrap p-2 rounded-md 
-        ${
-          props.disabled
-            ? `bg-gray-400 text-gray-200 cursor-not-allowed hover:cursor-not-allowed hover:bg-gray-400`
-            : `${className} ${labelSize} bg-btn-primary hover:bg-btn-hover text-white font-semibold hover:cursor-pointer my-2`
-        }`}
+      className={`${className} ${labelSize} flex flex-row flex-nowrap p-2 rounded-md text-slate-800 font-semibold my-2`}
       {...props}
     >
       {icon && <span className="mr-2">{icon}</span>}

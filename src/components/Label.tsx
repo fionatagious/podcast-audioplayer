@@ -6,14 +6,16 @@ type LabelProps = React.HTMLAttributes<HTMLLabelElement> & {
 
 const Label = ({ labelName, children, className, ...rest }: LabelProps) => {
   return (
-    <div className="flex text-md text-left">
+    <div className="flex flex-row">
       <label
-        className={`${className} uppercase text-gray-500 mb-2 font-semibold font-mono tracking-wide`}
+        className={`${className} uppercase text-gray-500 font-semibold font-mono tracking-wide`}
         {...rest}
       >
         {labelName}:&nbsp;
       </label>
-      <div className="normal-case">{children}</div>
+      {children && (
+        <div className="normal-case text-sm font-mono">{children}</div>
+      )}
     </div>
   );
 };
