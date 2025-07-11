@@ -103,7 +103,7 @@ const AudioPlayer = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex gap-4 my-4 items-center w-full border-1 border-indigo-800 rounded-lg shadow-lg bg-indigo-100 px-6 py-2">
+      <div className="flex gap-4 my-4 items-center w-full border-2 border-indigo-900 rounded-lg shadow-lg bg-indigo-100 px-6 py-2">
         <audio
           ref={audioElementRef}
           className={`${className} rounded-lg shadow-lg p-4`}
@@ -127,10 +127,7 @@ const AudioPlayer = ({
           onSeek={handleSeek}
           duration={audioDuration}
         />
-        <VolumeSlider
-          volume={volume}
-          onVolumeChange={(value) => setVolume(Number(value))}
-        />
+        <VolumeSlider volume={volume} onVolumeChange={setVolume} />
         <Button
           label={isMute ? "Unmute" : "Mute"}
           icon={isMute ? <VolumeIcon /> : <MuteIcon />}
@@ -140,14 +137,13 @@ const AudioPlayer = ({
       </div>
 
       {/* Download button */}
-      <div className="flex items-center gap-4">
-        <p>Click this button to download the audio file:</p>
-        <div className="bg-[#f9f9f9] rounded-md my-2 border-1 border-indigo-800 hover:cursor-pointer hover:bg-indigo-300">
+      <div className="flex items-center gap-4 justify-end">
+        <div className="bg-[#f9f9f9] rounded-md my-2 border-1 border-slate-500 hover:cursor-pointer hover:border-indigo-900 hover:shadow-md">
           <Link
             href={src}
             download={src}
             icon={<DownloadIcon />}
-            label="Download"
+            label="Download audio file"
           />
         </div>
       </div>
