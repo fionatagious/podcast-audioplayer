@@ -15,18 +15,18 @@ const VolumeSlider = ({
   onVolumeChange,
 }: VolumeSliderProps) => {
   return (
-    <div className={`flex flex-col ${className}`}>
+    <div className={`flex flex-col gap-2 ${className}`}>
       <label htmlFor="volume-slider">{label}</label>
       <input
         id="volume-slider"
+        name="volume-slider"
         // VolumeSlider extracts the value from the event and passes it to onVolumeChange as a number
         onChange={(e) => onVolumeChange(parseInt(e.target.value))}
         value={volume}
-        name="volume-slider"
         type="range"
         min="0"
         max="100"
-        className="w-full h-8 rounded-lg cursor-pointer"
+        className="w-full h-2 rounded cursor-pointer"
       />
     </div>
   );

@@ -1,29 +1,34 @@
+import { formatDuration } from "../utils/formatDuration";
+
 type ProgressBarProps = React.InputHTMLAttributes<HTMLInputElement> & {
   className?: string;
-  progress: number;
-  currentTime: string;
-  totalTime: string;
+  currentTime: number;
+  totalTime: number;
   onSeek: (time: number) => void;
-  duration: number;
 };
 
 const ProgressBar = ({
-  className = "",
-  progress,
+  className,
   currentTime,
+  totalTime,
+  onSeek,
 }: ProgressBarProps) => {
+  const currentTimeDisplay = formatDuration(currentTime);
+
   return (
-    <>
-      <div>{currentTime}</div>
-      <div
-        className={`flex flex-row relative w-full h-2 bg-gray-200 border-1 border-indigo-500 rounded ${className}`}
-      >
-        <div
-          className="absolute top-0 left-0 h-full bg-indigo-500 rounded"
-          style={{ width: `${progress}%` }}
+    <div className="progress-bar-wrapper flex items-center gap-2 w-full">
+      <div className="min-w-[90px]">{currentTimeDisplay}</div>
+      <div className={`${className} w-full`}>
+        <input
+          type="range"
+          value={currentTime}
+          min={0}
+          max={totalTime}
+          onChange={(e) => onSeek(parseFloat(e.target.value))}
+          className="progress-bar-input"
         />
       </div>
-    </>
+    </div>
   );
 };
 

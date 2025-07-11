@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { formatDuration } from "../utils/formatDuration";
 import Button from "./Button";
 import Link from "./Link";
 import ProgressBar from "./ProgressBar";
@@ -83,7 +82,6 @@ const AudioPlayer = ({
 
     const handleTimeUpdate = () => {
       // currentTime property specifies the current playback time in seconds
-      console.log("Current time:", audioElement.currentTime);
       setCurrentTime(audioElement.currentTime);
     };
 
@@ -121,19 +119,17 @@ const AudioPlayer = ({
           className="min-w-[120px] justify-around"
         />
         <ProgressBar
-          progress={audioDuration > 0 ? (currentTime / audioDuration) * 100 : 0}
-          currentTime={formatDuration(currentTime)}
-          totalTime={formatDuration(audioDuration)}
+          currentTime={currentTime}
+          totalTime={audioDuration}
           onSeek={handleSeek}
-          duration={audioDuration}
         />
-        <VolumeSlider volume={volume} onVolumeChange={setVolume} />
         <Button
           label={isMute ? "Unmute" : "Mute"}
           icon={isMute ? <VolumeIcon /> : <MuteIcon />}
           onClick={handleMute}
           className="min-w-[120px] justify-between"
         />
+        <VolumeSlider volume={volume} onVolumeChange={setVolume} />
       </div>
 
       {/* Download button */}
