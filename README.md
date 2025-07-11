@@ -17,7 +17,7 @@ Below is how I roughly spent my time:
 
 Please help us understand how you approached this take-home assignment. What was your first step, and what tooling did you use. What knowledge did you have that was helpful. What new concepts were you introduced to? Did you use AI?
 
-- My first step was to build the MVP by making a fetch call to get the JSON data and displaying the high-level conversation data, such as the location, date/time, and coordinates. I made an audio player using the <audio></audio> HTML element, passing a `controls` prop to implement basic functionality.
+- My first step was to build the MVP by making a fetch call to get the JSON data and displaying the high-level conversation data, such as the location, date/time, and coordinates. I made an audio player using the `<audio>` HTML element, passing a `controls` prop to implement basic functionality.
 - I had some prior knowledge working with audio data because I have built some simple web apps in the past using audio data, e.g. a drum kit and piano that can be played using the keyboard.
 - This was my first time trying Cursor AI. I used Cursor to clarify concepts, get feedback about improved naming, and for debugging when I got stuck.
 
