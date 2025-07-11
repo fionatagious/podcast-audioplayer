@@ -15,16 +15,11 @@
 
 a {
   font-weight: 500;
-  color: var(--color-indigo-900);
   text-decoration: inherit;
-}
-a:hover {
-  color: var(--color-indigo-900);
 }
 
 p {
   text-align: left;
-  font-size: 1.2em;
 }
 
 body {
@@ -37,17 +32,26 @@ body {
 }
 
 h1 {
-  font-size: 2.4em;
+  font-size: 2em;
   line-height: 1.1;
 }
 
 h2 {
   margin-top: 1em;
-  font-size: 2em;
+  font-size: 1.6em;
   line-height: 1.1;
 }
 
+h3 {
+  margin-bottom: 1em;
+  margin-top: 1em;
+  font-size: 1.4em;
+  line-height: 1.1;
+  text-align: left;
+}
+
 button {
+  background-color: #f9f9f9;
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -64,6 +68,40 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.progress-bar-input {
+  display: inline-flex;
+  width: 100%;
+  height: calc(var(--spacing) * 2) /* 0.5rem = 8px */;
+  border: 1px solid var(--color-indigo-900);
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+/* Styles for the entire track */
+input[type="range"]::-webkit-slider-runnable-track,
+input[type="range"]::-moz-range-track {
+  background-color: white;
+  height: 100%;
+  border-radius: 0.25rem;
+}
+
+/* Styles for the thumb */
+.progress-bar-wrapper input[type="range"]::-webkit-slider-thumb {
+  background-color: var(--color-indigo-900);
+}
+.progress-bar-wrapper input[type="range"]::-moz-range-thumb {
+  background-color: var(--color-indigo-900);
+  border-radius: 0.2;
+  width: 8px;
+  height: 18px;
+}
+
+/* Styles for the elapsed time portion */
+input[type="range"]::-moz-range-progress {
+  background-color: var(--color-indigo-500);
+  height: 100%;
 }
 
 @media (prefers-color-scheme: light) {
