@@ -10,7 +10,7 @@ const Dropdown = ({ options, value, onChange, className }: DropdownProps) => {
     <select
       value={value}
       onChange={onChange}
-      className={`${className} border-1 border-indigo-900 rounded-lg m-2 py-2 px-4 cursor-pointer hover:bg-indigo-300`}
+      className={`${className} bg-[#f9f9f9] rounded-md m-2 py-2 px-4 border-1 border-slate-500 text-slate-800 text-md font-weight-500 cursor-pointer hover:border-indigo-900 hover:shadow-md`}
     >
       <option value="">Select a participant</option>
       {options.map((option) => (

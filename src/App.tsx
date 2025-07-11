@@ -11,11 +11,10 @@ import Subheading from "./components/Subheading";
 import Label from "./components/Label";
 import AudioPlayer from "./components/AudioPlayer";
 import Dropdown from "./components/Dropdown";
-// utils
-import { formatDuration } from "./utils/formatDuration";
 // types
 import type { Snippet } from "./types/Snippet";
-import type { Conversation } from "./types/Conversation";
+// utils
+import { formatDuration } from "./utils/formatDuration";
 
 function App() {
   // Fetch conversation data and handle loading and error states
@@ -23,7 +22,7 @@ function App() {
 
   // Filter conversation by selected speaker
   const [selectedSpeaker, setSelectedSpeaker] = useState<string>("");
-  const speakerNames = useSpeakerNames(conversation as Conversation);
+  const speakerNames = useSpeakerNames(conversation);
   const filteredConversation = useSpeakerSnippets(
     conversation,
     selectedSpeaker
@@ -34,9 +33,8 @@ function App() {
   };
 
   // Calculate stats by speaker
-  const { wordCountBySpeaker, durationBySpeakerFormatted } = useSpeakerStats(
-    conversation as Conversation
-  );
+  const { wordCountBySpeakerSorted, durationBySpeakerFormatted } =
+    useSpeakerStats(conversation);
 
   if (loading) {
     return <div>Loading conversation data...</div>;
@@ -52,7 +50,7 @@ function App() {
       {conversation && (
         <>
           <Heading>{conversation.title}</Heading>
-          <p className="my-6">
+          <p className="my-6 text-lg">
             This conversation features the voices of various Cortico and MIT
             Media Lab staff and students reflecting on their time living in the
             Boston area.
@@ -86,11 +84,15 @@ function App() {
           duration={conversation.duration}
         />
       )}
+      <hr className="my-6" />
 
       <Subheading>Transcript</Subheading>
       {/* Dropdown to filter conversation by speaker */}
-      <div className="flex flex-row gap-2 items-center">
-        <p>Use the dropdown to filter the conversation by a speaker</p>
+      <div className="flex flex-row gap-2 items-center my-4 bg-orange-100 justify-between px-2 rounded-md">
+        <p className="text-lg">
+          To view only the snippets of a specific participant, use this dropdown
+          to filter the conversation by participant:
+        </p>
         <Dropdown
           options={speakerNames}
           value={selectedSpeaker}
@@ -101,8 +103,8 @@ function App() {
       {/* Transcript of conversation */}
       {filteredConversation &&
         filteredConversation.snippets.map((snippet: Snippet) => (
-          <div className="flex" key={snippet.id}>
-            <p className="min-w-[100px] text-xs">
+          <div className="flex items-start" key={snippet.id}>
+            <p className="min-w-[100px] text-md font-mono text-indigo-900">
               {formatDuration(snippet.audio_start_offset)}
             </p>
             <Label
@@ -116,25 +118,29 @@ function App() {
           </div>
         ))}
 
-      <Subheading>How many words each speaker said</Subheading>
-      {wordCountBySpeaker && (
-        <div className="flex flex-col gap-2 text-left">
-          {Object.keys(wordCountBySpeaker).map((speaker_name: string) => (
-            <span key={speaker_name}>
-              {speaker_name}: {wordCountBySpeaker[speaker_name]}
-            </span>
+      <hr className="my-6" />
+      <Subheading>Speaker Stats</Subheading>
+      <h3>How many words each speaker said</h3>
+      {wordCountBySpeakerSorted && (
+        <div className="flex flex-col gap-2 max-w-[200px]">
+          {Object.keys(wordCountBySpeakerSorted).map((speaker_name: string) => (
+            <div key={speaker_name} className="flex justify-between">
+              <Label labelName={speaker_name} className="min-w-80" />
+              <span>{wordCountBySpeakerSorted[speaker_name]}</span>
+            </div>
           ))}
         </div>
       )}
 
-      <Subheading>How long each speaker spoke</Subheading>
+      <h3>How long each speaker spoke</h3>
       {durationBySpeakerFormatted && (
-        <div className="flex flex-col gap-2 text-left">
+        <div className="flex flex-col gap-2 max-w-[200px]">
           {Object.keys(durationBySpeakerFormatted).map(
             (speaker_name: string) => (
-              <span key={speaker_name}>
-                {speaker_name}: {durationBySpeakerFormatted[speaker_name]}
-              </span>
+              <div key={speaker_name} className="flex justify-between">
+                <Label labelName={speaker_name} className="min-w-80" />
+                <span>{durationBySpeakerFormatted[speaker_name]}</span>
+              </div>
             )
           )}
         </div>
