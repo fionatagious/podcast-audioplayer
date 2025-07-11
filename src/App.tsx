@@ -26,7 +26,6 @@ function App() {
     conversation,
     selectedSpeaker
   );
-
   const handleSpeakerChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedSpeaker = event.target.value;
     setSelectedSpeaker(selectedSpeaker);
@@ -78,52 +77,51 @@ function App() {
           </Label>
         </>
       )}
+
       <Subheading>Conversation audio</Subheading>
+      <p>
+        Listen to the audio recording of the conversation. Use the controls to
+        play, pause, and adjust the volume.
+      </p>
       {conversation && (
         <AudioPlayer
           src={`../data${conversation.audio_url}`}
           duration={conversation.duration}
         />
       )}
-      {/* Filtered conversation snippets by speaker */}
-      <Subheading>Conversation snippets</Subheading>
-      <p>Select a speaker to only see the words spoken by that speaker</p>
-      <Dropdown
-        options={speakerNames}
-        value={selectedSpeaker}
-        onChange={handleSpeakerChange}
-      />
 
       <Subheading>Transcript</Subheading>
-      {filteredConversation
-        ? filteredConversation.snippets.map((snippet: Snippet) => (
-            <div className="flex" key={snippet.id}>
-              <p className="min-w-[160px]">{snippet.speaker_name}:&nbsp;</p>
-              <p className="flex text-left">
-                {snippet.words.map((word) => word[0]).join(" ")}
-              </p>
-            </div>
-          ))
-        : conversation &&
-          conversation.snippets.map((snippet: Snippet) => (
-            <div className="flex" key={snippet.id}>
-              <p className="min-w-[160px]">{snippet.speaker_name}:&nbsp;</p>
-              <p className="flex text-left">
-                {snippet.words.map((word) => word[0]).join(" ")}
-              </p>
-            </div>
-          ))}
+      {/* Dropdown to filter conversation by speaker */}
+      <div className="flex flex-col gap-2">
+        <p>Select a speaker to only see the words spoken by that speaker</p>
+        <Dropdown
+          options={speakerNames}
+          value={selectedSpeaker}
+          onChange={handleSpeakerChange}
+        />
+      </div>
+      {/* Transcript of conversation */}
+      {filteredConversation &&
+        filteredConversation.snippets.map((snippet: Snippet) => (
+          <div className="flex" key={snippet.id}>
+            <p className="min-w-[160px]">{snippet.speaker_name}:&nbsp;</p>
+            <p className="flex text-left">
+              {snippet.words.map((word) => word[0]).join(" ")}
+            </p>
+          </div>
+        ))}
 
       <Subheading>How many words each speaker said</Subheading>
       {wordCountBySpeaker && (
         <div className="flex flex-col gap-2 text-left">
           {Object.keys(wordCountBySpeaker).map((speaker_name: string) => (
             <span key={speaker_name}>
-              {speaker_name}: {wordCountBySpeaker[speaker_name]}{" "}
+              {speaker_name}: {wordCountBySpeaker[speaker_name]}
             </span>
           ))}
         </div>
       )}
+
       <Subheading>How long each speaker spoke</Subheading>
       {durationBySpeakerFormatted && (
         <div className="flex flex-col gap-2 text-left">

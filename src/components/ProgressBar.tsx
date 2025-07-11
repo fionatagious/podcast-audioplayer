@@ -5,26 +5,13 @@ type ProgressBarProps = React.InputHTMLAttributes<HTMLInputElement> & {
   totalTime: string;
   onSeek: (time: number) => void;
   duration: number;
-  //   onVolumeChange: (value: number) => void;
 };
 
 const ProgressBar = ({
   className = "",
   progress,
-  duration,
-  totalTime,
   currentTime,
 }: ProgressBarProps) => {
-  console.log(
-    "ProgressBar rendered with progress:",
-    progress,
-    "and duration:",
-    duration,
-    "and total time:",
-    totalTime,
-    "and current time:",
-    currentTime
-  );
   return (
     <>
       <div>{currentTime}</div>

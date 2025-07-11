@@ -75,7 +75,7 @@ const AudioPlayer = ({
     }
   }, [volume]);
 
-  // Set up audio event listeners
+  // audio event listeners
   useEffect(() => {
     const audioElement = audioElementRef.current;
     if (!audioElement) return;
@@ -106,7 +106,7 @@ const AudioPlayer = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex gap-4 items-center w-full border-2 border-indigo-500 rounded-lg bg-indigo-100 px-6 py-2">
+      <div className="flex gap-4 my-4 items-center w-full border-2 border-indigo-500 rounded-lg bg-indigo-100 px-6 py-2">
         <audio
           ref={audioElementRef}
           className={`${className} rounded-lg shadow-lg p-4`}
@@ -130,7 +130,6 @@ const AudioPlayer = ({
           onSeek={handleSeek}
           duration={audioDuration}
         />
-
         <VolumeSlider
           volume={volume}
           onVolumeChange={(value) => setVolume(Number(value))}

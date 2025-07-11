@@ -47,9 +47,7 @@ export const useConversationData = (): UseConversationDataResult => {
         throw new Error("Network response was not ok");
       }
 
-      console.log("Response received:", response);
       const data = await response.json();
-      console.log("Parsed conversation data:", data);
       return data;
     } catch (error) {
       console.error("Error fetching conversation data:", error);
