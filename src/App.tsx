@@ -11,6 +11,8 @@ import Subheading from "./components/Subheading";
 import Label from "./components/Label";
 import AudioPlayer from "./components/AudioPlayer";
 import Dropdown from "./components/Dropdown";
+// utils
+import { formatDuration } from "./utils/formatDuration";
 // types
 import type { Snippet } from "./types/Snippet";
 import type { Conversation } from "./types/Conversation";
@@ -46,6 +48,7 @@ function App() {
 
   return (
     <div>
+      {/* Heading and description */}
       {conversation && (
         <>
           <Heading>{conversation.title}</Heading>
@@ -57,11 +60,9 @@ function App() {
           <Label labelName="Location">
             <p>{conversation.location.name}</p>
           </Label>
-          <Label labelName="Date">
-            <p>{new Date(conversation.time).toLocaleDateString()}</p>
-          </Label>
-          <Label labelName="Time">
+          <Label labelName="Date/Time">
             <p>
+              {new Date(conversation.time).toLocaleDateString()}&nbsp;
               {new Date(conversation.time).toLocaleTimeString("en-US", {
                 hour: "numeric",
                 minute: "numeric",
@@ -78,11 +79,7 @@ function App() {
         </>
       )}
 
-      <Subheading>Conversation audio</Subheading>
-      <p>
-        Listen to the audio recording of the conversation. Use the controls to
-        play, pause, and adjust the volume.
-      </p>
+      {/* Audio player */}
       {conversation && (
         <AudioPlayer
           src={`../data${conversation.audio_url}`}
@@ -92,20 +89,28 @@ function App() {
 
       <Subheading>Transcript</Subheading>
       {/* Dropdown to filter conversation by speaker */}
-      <div className="flex flex-col gap-2">
-        <p>Select a speaker to only see the words spoken by that speaker</p>
+      <div className="flex flex-row gap-2 items-center">
+        <p>Use the dropdown to filter the conversation by a speaker</p>
         <Dropdown
           options={speakerNames}
           value={selectedSpeaker}
           onChange={handleSpeakerChange}
         />
       </div>
+
       {/* Transcript of conversation */}
       {filteredConversation &&
         filteredConversation.snippets.map((snippet: Snippet) => (
           <div className="flex" key={snippet.id}>
-            <p className="min-w-[160px]">{snippet.speaker_name}:&nbsp;</p>
-            <p className="flex text-left">
+            <p className="min-w-[100px] text-xs">
+              {formatDuration(snippet.audio_start_offset)}
+            </p>
+            <Label
+              className="flex min-w-[140px] text-left"
+              labelName={snippet.speaker_name}
+            />
+            &nbsp;
+            <p className="flex text-left mb-3">
               {snippet.words.map((word) => word[0]).join(" ")}
             </p>
           </div>
