@@ -16,6 +16,7 @@ import MapEmbed from "./components/MapEmbed";
 import type { Snippet } from "./types/Snippet";
 // utils
 import { formatDuration } from "./utils/formatDuration";
+import { getSpeakerColorFromPalette } from "./utils/colorsHash";
 
 function App() {
   // Fetch conversation data and handle loading and error states
@@ -109,7 +110,13 @@ function App() {
 
       {filteredConversation &&
         filteredConversation.snippets.map((snippet: Snippet) => (
-          <div className="flex items-start" key={snippet.id}>
+          <div
+            className="flex items-start border-l-4 pl-4 py-2 my-2"
+            key={snippet.id}
+            style={{
+              borderLeftColor: getSpeakerColorFromPalette(snippet.speaker_name),
+            }}
+          >
             <div className="flex flex-col min-w-[125px] sm:flex-row sm:min-w-[240px]">
               <p className="sm:min-w-[100px] font-mono text-indigo-900">
                 {formatDuration(snippet.audio_start_offset)}
