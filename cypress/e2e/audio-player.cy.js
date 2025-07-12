@@ -9,6 +9,9 @@ describe("Audio Player Functionality", () => {
 
   describe("Audio Controls", () => {
     it("should play and pause audio", () => {
+      // Wait for audioplayer to exist in the DOM
+      cy.get("audio").should("exist");
+
       // Initially should show Play button
       cy.get('button[data-cy="play-pause-button"]').should("contain", "Play");
       cy.get('button[data-cy="play-pause-button"]').should("be.visible");
