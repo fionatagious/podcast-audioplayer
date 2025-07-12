@@ -9,14 +9,12 @@ type VolumeSliderProps = Omit<
 };
 
 const VolumeSlider = ({
-  label = "Volume",
   className = "",
   volume,
   onVolumeChange,
 }: VolumeSliderProps) => {
   return (
-    <div className={`volume-slider-wrapper flex flex-col gap-2 ${className}`}>
-      <label htmlFor="volume-slider">{label}</label>
+    <div className={`volume-slider-wrapper ${className}`}>
       <input
         id="volume-slider"
         name="volume-slider"

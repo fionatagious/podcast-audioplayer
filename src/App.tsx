@@ -11,6 +11,7 @@ import Subheading from "./components/Subheading";
 import Label from "./components/Label";
 import AudioPlayer from "./components/AudioPlayer";
 import Dropdown from "./components/Dropdown";
+import MapEmbed from "./components/MapEmbed";
 // types
 import type { Snippet } from "./types/Snippet";
 // utils
@@ -45,35 +46,40 @@ function App() {
   }
 
   return (
-    <div>
-      {/* Heading and description */}
+    <div className="m-auto p-4 sm:max-w-70vw ">
+      {/* Heading and high-level description */}
       {conversation && (
         <>
           <Heading>{conversation.title}</Heading>
-          <p className="my-6 text-lg">
-            This conversation features the voices of various Cortico and MIT
-            Media Lab staff and students reflecting on their time living in the
-            Boston area.
-          </p>
-          <Label labelName="Location">
-            <p>{conversation.location.name}</p>
-          </Label>
-          <Label labelName="Date/Time">
-            <p>
-              {new Date(conversation.time).toLocaleDateString()}&nbsp;
-              {new Date(conversation.time).toLocaleTimeString("en-US", {
-                hour: "numeric",
-                minute: "numeric",
-                hour12: true,
-              })}
-            </p>
-          </Label>
-          <Label labelName="Coordinates">
-            <p>
-              {conversation.location.lng_lat[0]},&nbsp;
-              {conversation.location.lng_lat[1]}
-            </p>
-          </Label>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col gap-2">
+              <p className="my-6 text-lg">
+                This conversation features the voices of various Cortico and MIT
+                Media Lab staff and students reflecting on their time living in
+                the Boston area.
+              </p>
+              <Label labelName="Date/Time">
+                <p>
+                  {new Date(conversation.time).toLocaleDateString()}&nbsp;
+                  {new Date(conversation.time).toLocaleTimeString("en-US", {
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: true,
+                  })}
+                </p>
+              </Label>
+              <Label labelName="Location">
+                <p>{conversation.location.name}</p>
+              </Label>
+              <Label labelName="Coordinates">
+                <p>
+                  {conversation.location.lng_lat[0]},&nbsp;
+                  {conversation.location.lng_lat[1]}
+                </p>
+              </Label>
+            </div>
+            <MapEmbed className="my-6 flex shrink" />
+          </div>
         </>
       )}
 
@@ -86,10 +92,11 @@ function App() {
       )}
       <hr className="my-6" />
 
+      {/* Transcript of conversation */}
       <Subheading>Transcript</Subheading>
       {/* Dropdown to filter conversation by speaker */}
-      <div className="flex flex-row gap-2 items-center my-4 bg-orange-100 justify-between px-2 rounded-md">
-        <p className="text-lg">
+      <div className="flex flex-col sm:flex-row gap-2 items-center my-4 bg-orange-100 justify-between px-2 rounded-md">
+        <p className="text-lg p-2">
           To view only the snippets of a specific participant, use this dropdown
           to filter the conversation by participant:
         </p>
@@ -100,25 +107,24 @@ function App() {
         />
       </div>
 
-      {/* Transcript of conversation */}
       {filteredConversation &&
         filteredConversation.snippets.map((snippet: Snippet) => (
           <div className="flex items-start" key={snippet.id}>
-            <p className="min-w-[100px] text-md font-mono text-indigo-900">
-              {formatDuration(snippet.audio_start_offset)}
-            </p>
-            <Label
-              className="flex min-w-[140px] text-left"
-              labelName={snippet.speaker_name}
-            />
+            <div className="flex flex-col min-w-[125px] sm:flex-row sm:min-w-[240px]">
+              <p className="sm:min-w-[100px] font-mono text-indigo-900">
+                {formatDuration(snippet.audio_start_offset)}
+              </p>
+              <Label labelName={snippet.speaker_name} />
+            </div>
             &nbsp;
-            <p className="flex text-left mb-3">
+            <p className="mb-3">
               {snippet.words.map((word) => word[0]).join(" ")}
             </p>
           </div>
         ))}
 
       <hr className="my-6" />
+      {/* Speaker stats */}
       <Subheading>Speaker Stats</Subheading>
       <h3>How many words each speaker said</h3>
       {wordCountBySpeakerSorted && (

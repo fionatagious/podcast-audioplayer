@@ -16,8 +16,10 @@ const ProgressBar = ({
   const currentTimeDisplay = formatDuration(currentTime);
 
   return (
-    <div className="progress-bar-wrapper flex items-center gap-2 w-full">
-      <div className="min-w-[90px]">{currentTimeDisplay}</div>
+    <div className="progress-bar-wrapper flex items-center gap-0 sm:gap-2 w-full">
+      <div className="mx-[4px] min-w-[60px] sm:min-w-[90px]">
+        {currentTimeDisplay}
+      </div>
       <div className={`${className} w-full`}>
         <input
           type="range"

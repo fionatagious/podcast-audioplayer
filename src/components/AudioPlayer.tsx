@@ -33,6 +33,7 @@ const AudioPlayer = ({
 
   // State to manage current time and audio duration
   const [currentTime, setCurrentTime] = useState(0);
+  const [showVolumeSlider, setShowVolumeSlider] = useState(false);
   const audioDuration = duration;
 
   // When play/pause button is clicked, play or pause the audio
@@ -68,6 +69,11 @@ const AudioPlayer = ({
     setCurrentTime(newTime);
   }
 
+  // Show or hide volume slider
+  function handleShowVolumeSlider() {
+    setShowVolumeSlider(!showVolumeSlider);
+  }
+
   // Whenever `volume` changes, update the audio element's volume
   useEffect(() => {
     if (audioElementRef.current) {
@@ -101,7 +107,7 @@ const AudioPlayer = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex gap-4 my-4 items-center w-full border-2 border-indigo-900 rounded-lg shadow-lg bg-indigo-100 px-6 py-2">
+      <div className="flex flex-nowrap gap-4 my-4 items-center w-full border-2 border-indigo-900 rounded-lg shadow-lg bg-indigo-100 px-2 sm:px-6 py-2">
         <audio
           ref={audioElementRef}
           className={`${className} rounded-lg shadow-lg p-4`}
@@ -112,24 +118,39 @@ const AudioPlayer = ({
         </audio>
 
         {/* Audio controls */}
-        <Button
-          onClick={handlePlayPause}
-          icon={isPlaying ? <PauseIcon /> : <PlayIcon />}
-          label={isPlaying ? "Pause" : "Play"}
-          className="min-w-[120px] justify-around"
-        />
-        <ProgressBar
-          currentTime={currentTime}
-          totalTime={audioDuration}
-          onSeek={handleSeek}
-        />
-        <Button
-          label={isMute ? "Unmute" : "Mute"}
-          icon={isMute ? <VolumeIcon /> : <MuteIcon />}
-          onClick={handleMute}
-          className="min-w-[120px] justify-between"
-        />
-        <VolumeSlider volume={volume} onVolumeChange={setVolume} />
+        <div className="flex items-center w-full">
+          <Button
+            onClick={handlePlayPause}
+            icon={isPlaying ? <PauseIcon /> : <PlayIcon />}
+            label={isPlaying ? "Pause" : "Play"}
+          />
+          <ProgressBar
+            currentTime={currentTime}
+            totalTime={audioDuration}
+            onSeek={handleSeek}
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <Button
+            label={isMute ? "Unmute" : "Mute"}
+            icon={isMute ? <VolumeIcon /> : <MuteIcon />}
+            onClick={handleMute}
+          />
+          <Button
+            label="Volume"
+            icon={<VolumeIcon />}
+            onClick={handleShowVolumeSlider}
+            className="relative"
+          >
+            {showVolumeSlider && (
+              <VolumeSlider
+                volume={volume}
+                onVolumeChange={setVolume}
+                className="rotate-270 absolute bottom-21 min-w-[100px]"
+              />
+            )}
+          </Button>
+        </div>
       </div>
 
       {/* Download button */}
