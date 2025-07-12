@@ -7,7 +7,9 @@ import { useSpeakerNames } from "./hooks/useSpeakerNames";
 import { useSpeakerSnippets } from "./hooks/useSpeakerSnippets";
 // components
 import Heading from "./components/Heading";
-import Subheading from "./components/Subheading";
+import Heading2 from "./components/Heading2";
+import Heading3 from "./components/Heading3";
+import Paragraph from "./components/Paragraph";
 import Label from "./components/Label";
 import AudioPlayer from "./components/AudioPlayer";
 import Dropdown from "./components/Dropdown";
@@ -54,29 +56,29 @@ function App() {
           <Heading>{conversation.title}</Heading>
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex flex-col gap-2">
-              <p className="my-6 text-lg">
+              <Paragraph size="text-lg" className="my-6">
                 This conversation features the voices of various Cortico and MIT
                 Media Lab staff and students reflecting on their time living in
                 the Boston area.
-              </p>
+              </Paragraph>
               <Label labelName="Date/Time">
-                <p>
+                <Paragraph>
                   {new Date(conversation.time).toLocaleDateString()}&nbsp;
                   {new Date(conversation.time).toLocaleTimeString("en-US", {
                     hour: "numeric",
                     minute: "numeric",
                     hour12: true,
                   })}
-                </p>
+                </Paragraph>
               </Label>
               <Label labelName="Location">
-                <p>{conversation.location.name}</p>
+                <Paragraph>{conversation.location.name}</Paragraph>
               </Label>
               <Label labelName="Coordinates">
-                <p>
+                <Paragraph>
                   {conversation.location.lng_lat[0]},&nbsp;
                   {conversation.location.lng_lat[1]}
-                </p>
+                </Paragraph>
               </Label>
             </div>
             <MapEmbed className="my-6 flex shrink" />
@@ -94,13 +96,13 @@ function App() {
       <hr className="my-6" />
 
       {/* Transcript of conversation */}
-      <Subheading>Transcript</Subheading>
+      <Heading2>Transcript</Heading2>
       {/* Dropdown to filter conversation by speaker */}
       <div className="flex flex-col sm:flex-row gap-2 items-center my-4 bg-orange-100 justify-between px-2 rounded-md">
-        <p className="text-lg p-2">
+        <Paragraph size="text-lg" className="p-2">
           To view only the snippets of a specific participant, use this dropdown
           to filter the conversation by participant:
-        </p>
+        </Paragraph>
         <Dropdown
           options={speakerNames}
           value={selectedSpeaker}
@@ -118,22 +120,26 @@ function App() {
             }}
           >
             <div className="flex flex-col min-w-[125px] sm:flex-row sm:min-w-[240px]">
-              <p className="sm:min-w-[100px] font-mono text-indigo-900">
+              <Paragraph
+                color="text-indigo-900"
+                fontFamily="font-mono"
+                className="sm:min-w-[100px]"
+              >
                 {formatDuration(snippet.audio_start_offset)}
-              </p>
+              </Paragraph>
               <Label labelName={snippet.speaker_name} />
             </div>
             &nbsp;
-            <p className="mb-3">
+            <Paragraph className="mb-3">
               {snippet.words.map((word) => word[0]).join(" ")}
-            </p>
+            </Paragraph>
           </div>
         ))}
 
       <hr className="my-6" />
       {/* Speaker stats */}
-      <Subheading>Speaker Stats</Subheading>
-      <h3>How many words each speaker said</h3>
+      <Heading2>Speaker Stats</Heading2>
+      <Heading3>How many words each speaker said</Heading3>
       {wordCountBySpeakerSorted && (
         <div className="flex flex-col gap-2 max-w-[200px]">
           {Object.keys(wordCountBySpeakerSorted).map((speaker_name: string) => (
@@ -145,7 +151,7 @@ function App() {
         </div>
       )}
 
-      <h3>How long each speaker spoke</h3>
+      <Heading3>How long each speaker spoke</Heading3>
       {durationBySpeakerFormatted && (
         <div className="flex flex-col gap-2 max-w-[200px]">
           {Object.keys(durationBySpeakerFormatted).map(
