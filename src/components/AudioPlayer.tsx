@@ -120,6 +120,7 @@ const AudioPlayer = ({
         {/* Audio controls */}
         <div className="flex items-center w-full">
           <Button
+            data-cy="play-pause-button"
             onClick={handlePlayPause}
             icon={isPlaying ? <PauseIcon /> : <PlayIcon />}
             label={isPlaying ? "Pause" : "Play"}
@@ -132,6 +133,7 @@ const AudioPlayer = ({
         </div>
         <div className="flex items-center gap-2">
           <Button
+            data-cy="mute-unmute-button"
             label={isMute ? "Unmute" : "Mute"}
             icon={isMute ? <VolumeIcon /> : <MuteIcon />}
             onClick={handleMute}
@@ -157,6 +159,7 @@ const AudioPlayer = ({
       <div className="flex items-center gap-4 justify-end">
         <div className="bg-[#f9f9f9] rounded-md my-2 border-1 border-slate-500 hover:cursor-pointer hover:border-indigo-900 hover:shadow-md">
           <Link
+            data-cy="download-audio-button"
             href={src}
             download={src}
             icon={<DownloadIcon />}

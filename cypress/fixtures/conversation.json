@@ -1,0 +1,71 @@
+{
+  "id": 3,
+  "duration": 4668,
+  "audio_url": "/conversation.m4a",
+  "title": "Conversation at the MIT Media Lab",
+  "location": { "name": "Kendall Square", "lng_lat": [-71.09, 42.36] },
+  "time": "2018-10-27T07:12:32.000Z",
+  "snippets": [
+    {
+      "audio_end_offset": 32.79,
+      "audio_start_offset": 1.68,
+      "conversation_id": 3,
+      "duration": 29.7,
+      "id": 300000,
+      "speaker_id": "0",
+      "speaker_name": "Moderator",
+      "words": [
+        ["Welcome", 1.68, 2.01],
+        ["to", 2.01, 2.13],
+        ["this", 2.13, 2.28],
+        ["conversation", 2.31, 2.91],
+        ["of", 2.91, 3],
+        ["the", 3, 3.09],
+        ["Local", 3.09, 3.36],
+        ["Voices", 3.36, 3.78],
+        ["Network.", 3.78, 4.47]
+      ],
+      "time": "2018-10-27T07:12:32.000Z"
+    },
+    {
+      "audio_end_offset": 45.23,
+      "audio_start_offset": 32.79,
+      "conversation_id": 3,
+      "duration": 12.44,
+      "id": 300001,
+      "speaker_id": "1",
+      "speaker_name": "Sarah",
+      "words": [
+        ["Thank", 32.79, 33.12],
+        ["you", 33.12, 33.45],
+        ["for", 33.45, 33.78],
+        ["having", 33.78, 34.11],
+        ["us", 34.11, 34.44],
+        ["here", 34.44, 34.77],
+        ["today.", 34.77, 35.1]
+      ],
+      "time": "2018-10-27T07:12:32.000Z"
+    },
+    {
+      "audio_end_offset": 78.56,
+      "audio_start_offset": 45.23,
+      "conversation_id": 3,
+      "duration": 33.33,
+      "id": 300002,
+      "speaker_id": "2",
+      "speaker_name": "Mike",
+      "words": [
+        ["I'm", 45.23, 45.56],
+        ["really", 45.56, 45.89],
+        ["excited", 45.89, 46.22],
+        ["to", 46.22, 46.55],
+        ["share", 46.55, 46.88],
+        ["my", 46.88, 47.21],
+        ["thoughts", 47.21, 47.54],
+        ["about", 47.54, 47.87],
+        ["Boston.", 47.87, 48.2]
+      ],
+      "time": "2018-10-27T07:12:32.000Z"
+    }
+  ]
+}
