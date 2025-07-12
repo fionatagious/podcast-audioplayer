@@ -1,4 +1,5 @@
 import { formatDuration } from "../utils/formatDuration";
+import Paragraph from "./Paragraph";
 
 type ProgressBarProps = React.InputHTMLAttributes<HTMLInputElement> & {
   className?: string;
@@ -17,9 +18,9 @@ const ProgressBar = ({
 
   return (
     <div className="progress-bar-wrapper flex items-center gap-0 sm:gap-2 w-full">
-      <div className="mx-[4px] min-w-[60px] sm:min-w-[90px]">
+      <Paragraph className="mx-[4px] min-w-[60px] sm:min-w-[90px] px-0 sm:px-2">
         {currentTimeDisplay}
-      </div>
+      </Paragraph>
       <div className={`${className} w-full`}>
         <input
           type="range"

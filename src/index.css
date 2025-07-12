@@ -73,14 +73,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* Styles for the entire track */
-input[type="range"]::-webkit-slider-runnable-track,
-input[type="range"]::-moz-range-track {
-  background-color: white;
-  height: 100%;
-  border-radius: 0.25rem;
-}
-
 /* Styles for the progress bar input */
 .progress-bar-input {
   display: inline-flex;
@@ -99,20 +91,45 @@ input[type="range"]::-moz-range-track {
   z-index: 99;
 }
 
+/* Styles for the progress bar track */
+.progress-bar-wrapper input[type="range"]::-webkit-slider-runnable-track,
+.progress-bar-wrapper input[type="range"]::-moz-range-track {
+  appearance: auto;
+  background-color: white;
+  height: 100%;
+  border-radius: 0.25rem;
+}
+
 /* Styles for the thumb in the progress bar*/
 .progress-bar-wrapper input[type="range"]::-webkit-slider-thumb,
 .progress-bar-wrapper input[type="range"]::-moz-range-thumb {
+  appearance: auto;
   background-color: var(--color-indigo-900);
-  border-radius: 0.2;
+  border: none;
+  border-radius: 0.2em;
   width: 8px;
   height: 18px;
+  margin-top: -4px;
 }
 
 /* Styles for the volume slider thumb */
 .volume-slider-wrapper input[type="range"]::-webkit-slider-thumb,
 .volume-slider-wrapper input[type="range"]::-moz-range-thumb {
+  appearance: auto;
   background-color: var(--color-indigo-900);
   border-radius: 50%;
+  border: none;
+  margin-top: -4px;
+}
+
+/* Styles for the volume slider track */
+.volume-slider-wrapper input[type="range"]::-webkit-slider-runnable-track,
+.volume-slider-wrapper input[type="range"]::-moz-range-track {
+  appearance: auto;
+  background-color: var(--color-indigo-300);
+  height: 100%;
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-indigo-900);
 }
 
 /* Styles for the elapsed time portion */
