@@ -57,6 +57,20 @@ describe("Audio Player Functionality", () => {
       cy.get('input[type="range"]').should("have.length.at.least", 2); // Progress bar + volume slider
     });
 
+    it("should change volume using slider", () => {
+      // Click volume button to show volume slider
+      cy.get("button").contains("Volume").click();
+
+      // Should have at least one range input for volume
+      cy.get('input[type="range"]').should("have.length.at.least", 2);
+
+      // Change volume using the slider
+      cy.get('input[type="range"]').last().invoke("val", 0.5).trigger("change");
+
+      // Verify that the volume has changed
+      cy.get('input[type="range"]').last().should("have.value", "50");
+    });
+
     it("should have working progress bar", () => {
       // Progress bar should exist
       cy.get('input[type="range"]').first().should("exist");

@@ -2,7 +2,6 @@ type VolumeSliderProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "onVolumeChange"
 > & {
-  label?: string;
   className?: string;
   volume: number;
   onVolumeChange: (value: number) => void;
@@ -19,7 +18,7 @@ const VolumeSlider = ({
         id="volume-slider"
         name="volume-slider"
         // VolumeSlider extracts the value from the event and passes it to onVolumeChange as a number
-        onChange={(e) => onVolumeChange(parseInt(e.target.value))}
+        onInput={(e) => onVolumeChange(parseInt(e.currentTarget.value))}
         value={volume}
         type="range"
         min="0"
