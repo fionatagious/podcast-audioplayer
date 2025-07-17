@@ -19,6 +19,7 @@ const VolumeSlider = ({
         name="volume-slider"
         // VolumeSlider extracts the value from the event and passes it to onVolumeChange as a number
         onInput={(e) => onVolumeChange(parseInt(e.currentTarget.value))}
+        onChange={(e) => onVolumeChange(parseInt(e.currentTarget.value))}
         value={volume}
         type="range"
         min="0"
