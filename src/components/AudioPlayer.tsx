@@ -12,15 +12,17 @@ import DownloadIcon from "../icons/DownloadIcon";
 type AudioPlayerProps = React.AudioHTMLAttributes<HTMLAudioElement> & {
   src: string;
   duration: number; // Duration in seconds
-  children?: React.ReactNode;
   className?: string;
+  onSeek?: (time: number) => void; // Add prop to expose seek functionality
+  audioRef?: (ref: HTMLAudioElement | null) => void; // Add ref callback prop
 };
 
 const AudioPlayer = ({
   src,
   duration,
-  children,
   className,
+  onSeek,
+  audioRef,
   ...rest
 }: AudioPlayerProps) => {
   // Store audio ref object
@@ -67,6 +69,8 @@ const AudioPlayer = ({
     if (!audioElement) return;
     audioElement.currentTime = newTime;
     setCurrentTime(newTime);
+    // Call the parent's onSeek function if provided
+    onSeek?.(newTime);
   }
 
   // Show or hide volume slider
@@ -75,9 +79,11 @@ const AudioPlayer = ({
   }
 
   // Whenever `volume` changes, update the audio element's volume
+  // readyState >= 2 means at least some of the audio data is loaded and can be manipulated
   useEffect(() => {
-    if (audioElementRef.current) {
-      audioElementRef.current.volume = volume / 100; // Convert 0-100 to 0-1
+    const audioElement = audioElementRef.current;
+    if (audioElement && audioElement.readyState >= 2) {
+      audioElement.volume = volume / 100; // Convert 0-100 to 0-1
     }
   }, [volume]);
 
@@ -109,11 +115,13 @@ const AudioPlayer = ({
     <div className="flex flex-col gap-2">
       <div className="flex flex-nowrap gap-4 my-4 items-center w-full border-2 border-indigo-900 rounded-lg shadow-lg bg-indigo-100 px-2 sm:px-6 py-2">
         <audio
-          ref={audioElementRef}
+          ref={(ref) => {
+            audioElementRef.current = ref;
+            audioRef?.(ref); // Call the ref callback if provided
+          }}
           className={`${className} rounded-lg shadow-lg p-4`}
           {...rest}
         >
-          {children}
           <source src={src} type="audio/mp4" />
         </audio>
 

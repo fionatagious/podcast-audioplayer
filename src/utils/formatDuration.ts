@@ -1,4 +1,5 @@
 // convert number of seconds to a formatted string that includes minutes and seconds
+// e.g. 65 seconds -> "1:05", 3600 seconds -> "1:00:00"
 export function formatDuration(seconds: number): string {
   if (seconds < 0) {
     return "0 sec";

@@ -1,10 +1,11 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 // custom hooks
 import { useConversationData } from "./hooks/useConversationData";
 import { useSpeakerStats } from "./hooks/useSpeakerStats";
 import { useSpeakerNames } from "./hooks/useSpeakerNames";
 import { useSpeakerSnippets } from "./hooks/useSpeakerSnippets";
+import { useAudioSeek } from "./hooks/useAudioSeek";
 // components
 import Heading from "./components/Heading";
 import Heading2 from "./components/Heading2";
@@ -24,6 +25,10 @@ function App() {
   // Fetch conversation data and handle loading and error states
   const { conversation, loading, error } = useConversationData();
 
+  // Audio ref for seeking
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const { seekTo } = useAudioSeek(audioRef);
+
   // Filter conversation by selected speaker
   const [selectedSpeaker, setSelectedSpeaker] = useState<string>("");
   const speakerNames = useSpeakerNames(conversation);
@@ -34,6 +39,11 @@ function App() {
   const handleSpeakerChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedSpeaker = event.target.value;
     setSelectedSpeaker(selectedSpeaker);
+  };
+
+  // Handle timestamp click to seek to specific time
+  const handleTimestampClick = (time: number) => {
+    seekTo(time);
   };
 
   // Calculate stats by speaker
@@ -95,6 +105,10 @@ function App() {
         <AudioPlayer
           src={`../data${conversation.audio_url}`}
           duration={conversation.duration}
+          onSeek={seekTo}
+          audioRef={(ref) => {
+            audioRef.current = ref;
+          }}
         />
       )}
       <hr className="my-6" />
@@ -127,7 +141,9 @@ function App() {
               <Paragraph
                 color="text-indigo-900"
                 fontFamily="font-mono"
-                className="sm:min-w-[100px]"
+                className="text-left sm:min-w-[100px] cursor-pointer hover:underline"
+                onClick={() => handleTimestampClick(snippet.audio_start_offset)}
+                title={`Jump to ${formatDuration(snippet.audio_start_offset)}`}
               >
                 {formatDuration(snippet.audio_start_offset)}
               </Paragraph>

@@ -2,10 +2,10 @@ import { formatDuration } from "../utils/formatDuration";
 import Paragraph from "./Paragraph";
 
 type ProgressBarProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  className?: string;
   currentTime: number;
   totalTime: number;
   onSeek: (time: number) => void;
+  className?: string;
 };
 
 const ProgressBar = ({
